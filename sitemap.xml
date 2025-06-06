@@ -1,3 +1,4 @@
+ HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -16,4 +17,24 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ivocarservice.pl/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Dodaj kolejne podstrony w ten sposób -->
+  <url>
+    <loc>https://ivocarservice.pl/o-nas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ivocarservice.pl/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+ d47d1e2445457cef4800781a1f9dfa1c4ea3721b
 </urlset>
