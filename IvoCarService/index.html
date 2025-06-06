@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IVO CAR Service – Serwis samochodów dostawczych</title>
+  <link rel="icon" href="favicon.png" />
+  <style>
+    :root {
+      --dark-bg: #0d0d0d;
+      --primary: #00bfff;
+      --light: #f0f0f0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #000;
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 2px solid var(--primary);
+      animation: fadeIn 1s ease-out;
+    }
+
+    header img {
+      width: 140px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 10px var(--primary));
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: auto;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    h2 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .services ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    .services li {
+      background: #1a1a1a;
+      border-left: 4px solid var(--primary);
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact p, .contact a {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--light);
+    }
+
+    .contact a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 25px;
+      background-color: var(--primary);
+      color: #0d0d0d;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact a:hover {
+      background-color: #0091d9;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .gallery a {
+      display: block;
+      height: 160px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 8px #00bfff80;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery a:hover img {
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 0.9rem;
+      color: #777;
+      background-color: #111;
+      border-top: 1px solid #333;
+    }
+
+    /* Lightbox styles */
+    .lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.lightbox-content {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox img,
+.lightbox video {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border: 3px solid var(--primary);
+  border-radius: 5px;
+  animation: zoomIn 0.3s ease-out;
+  object-fit: contain;
+}
+
+.lightbox video {
+  background-color: #000;
+}
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      text-decoration: none;
+      z-index: 1001;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      color: white;
+      font-weight: bold;
+      font-size: 30px;
+      text-align: center;
+      line-height: 50px;
+      text-decoration: none;
+      z-index: 1001;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .next {
+      right: 30px;
+    }
+
+    .prev {
+      left: 30px;
+    }
+
+    .prev:hover, .next:hover, .close-btn:hover {
+      color: var(--primary);
+      background: rgba(0,0,0,0.8);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .services li {
+        font-size: 1rem;
+      }
+      
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+      
+      .lightbox img {
+        max-width: 95%;
+        max-height: 70vh;
+      }
+      
+      .prev, .next {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        line-height: 40px;
+      }
+      
+      .next {
+        right: 15px;
+      }
+      
+      .prev {
+        left: 15px;
+      }
+    }
+
+    .about-text {
+      text-align: justify;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      background: rgba(30, 30, 30, 0.5);
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00bfff66;
+      color: #ccc;
+    }
+
+    .highlight-blue {
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    a[href^="tel"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 168, 255, 0.4);
+    }
+    .contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.contact-box {
+  background-color: #000;
+  border: 2px solid #00bfff;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.map-container {
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .map-container {
+    min-height: 300px;
+  }
+}
+  </style>
+</head>
+<header class="clean-header">
+  <div class="header-container">
+    <img src="Logo.jpg" alt="IVO CAR Service" class="main-logo">
+    <div style="font-size: 2.5rem; font-weight: bold; color: #00bfff; text-align: center; line-height: 1.4;">
+    Specjalistyczny serwis samochodów dostawczych<br>
+  Warszawa Białołęka
+</div>
+</header>
+
+<style>
+  .clean-header {
+    background-color: #0d0d0d;
+    text-align: center;
+    padding: 70px 20px 50px;
+    border-bottom: 2px solid #00bfff;
+  }
+
+ .header-container {
+  max-width: 2000px; /* zwiększ z 800 jeśli trzeba */
+  margin: 0 auto;
+}
+
+
+  .main-logo {
+  height: auto;
+  width: 300px; /* lub więcej np. 250–300px w zależności od efektu */
+  max-width: 90vw;
+  display: block;
+  margin: 0 auto 25px auto;
+  filter: drop-shadow(0 0 15px rgba(0, 191, 255, 0.6));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.main-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 25px rgba(0, 191, 255, 0.8));
+}
+
+
+
+
+  .header-subtitle {
+    font-size: 1.4rem;
+    color: #ccc;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .location {
+    color: white;
+    font-weight: 600;
+    display: block;
+    margin-top: 5px;
+  }
+
+@media (max-width: 768px) {
+  .main-logo {
+    width: 160px;
+    margin-bottom: 20px;
+  }
+}
+       .header-subtitle {
+      font-size: 1.1rem;
+    }
+  
+</style>
+<section class="about-section">
+  <div class="about-container">
+    <h2 class="section-title">POZNAJ NAS BLIŻEJ</h2>
+    
+    <div class="about-content">
+      <div class="text-block">
+  <p><span class="highlight-blue">IVO CAR Service</span> to profesjonalny warsztat samochodowy z wieloletnim doświadczeniem w naprawie samochodów dostawczych na terenie Warszawy, ze szczególnym uwzględnieniem dzielnicy Białołęka.</p>
+  <p>Naszą misją jest zapewnienie klientom najwyższego poziomu obsługi oraz pełnego zaufania do świadczonych usług.</p>
+  <p>Dzięki wykwalifikowanemu zespołowi mechaników i nowoczesnemu sprzętowi diagnostycznemu, jesteśmy w stanie szybko i skutecznie rozwiązywać nawet najbardziej skomplikowane problemy techniczne.</p>
+  <p>W <span class="highlight-blue">IVO CAR Service</span> stawiamy na indywidualne podejście do każdego klienta – rozumiemy, jak ważny jest dla Ciebie sprawny i bezpieczny pojazd, dlatego dokładamy wszelkich starań, aby naprawy przebiegały sprawnie i terminowo.</p>
+  <p>Dbamy o komfort oraz satysfakcję naszych klientów, oferując przyjazną atmosferę i profesjonalne doradztwo na każdym etapie współpracy.</p>
+  <p>Wybierając nasz warsztat, masz pewność, że Twój samochód dostawczy jest w najlepszych rękach.</p>
+</div>
+  </div>
+</section>
+
+<style>
+  /* Główne style sekcji */
+  .about-section {
+    background-color: #111;
+    padding: 80px 20px;
+    color: #fff;
+  }
+  
+  .about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  /* Nagłówek */
+  .section-title {
+    color: #00bfff;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+  }
+  
+  /* Zawartość tekstowa */
+  .about-content {
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 4px solid #00bfff;
+  }
+  
+  .text-block p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  
+  .mission-box {
+    background: rgba(0, 191, 255, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 25px 0;
+    border-left: 3px solid #00bfff;
+  }
+  
+  /* Sekcja CTA */
+  .cta-block {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .cta-text {
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #00bfff;
+    color: #000;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background: #0091d9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4);
+  }
+  
+  /* Sekcja zespołu */
+  .team-section {
+    position: relative;
+    background: url('mechanik.jpg') center/cover;
+    height: 300px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .team-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .team-title {
+    color: #fff;
+    font-size: 1.8rem;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .experience-badge {
+    background: rgba(0, 191, 255, 0.8);
+    color: #000;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+  }
+  
+  .years {
+    font-size: 2.5rem;
+    display: block;
+    line-height: 1;
+  }
+  
+  .text {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+  
+  /* Responsywność */
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .about-content {
+      padding: 20px;
+    }
+    
+    .team-section {
+      height: 250px;
+    }
+    
+    .years {
+      font-size: 2rem;
+    }
+  }
+  .lightbox video {
+  max-width: 90%;
+  max-height: 80vh;
+  border: 3px solid var(--primary);
+  border-radius: 5px;
+  background-color: black;
+  }
+</style>
+
+<!-- Dodaj w head -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <section class="services">
+    <h2>NASZE USŁUGI</h2>
+    <ul>
+      <li>🔧 Kompleksowa naprawa samochodów dostawczych</li>
+      <li>🚐 Specjalizacja w pojazdach: IVECO, FIAT DUCATO, PEUGEOT BOXER, CITROËN JUMPER, RENAULT MASTER</li>
+      <li>💻 Diagnostyka komputerowa i elektroniczna – szybkie wykrywanie usterek</li>
+      <li>🛑 Naprawa i serwis układu hamulcowego – bezpieczeństwo przede wszystkim</li>
+      <li>🛠️ Naprawa i regulacja zawieszenia – komfort i stabilność jazdy</li>
+      <li>❄️ Serwis i napełnianie klimatyzacji samochodowej</li>
+      <li>🛢️ Wymiana oleju silnikowego oraz filtrów</li>
+      <li>🔍 Przeglądy techniczne i przygotowanie do badań diagnostycznych</li>
+      <li>🛞 Usługi wulkanizacyjne – wymiana i wyważanie opon</li>
+      <li>🏢 Obsługa flot firmowych – szybkie terminy i kompleksowa opieka nad pojazdami</li>
+    </ul>
+  </section>
+
+  <section class="gallery">
+    <a href="#img1">
+      <img src="zdjecie1.jpg" alt="Warsztat 1" loading="lazy">
+    </a>
+    <a href="#img2">
+      <img src="zdjecie2.jpg" alt="Warsztat 2" loading="lazy">
+    </a>
+    <a href="#img3">
+      <img src="zdjecie3.jpg" alt="Mechanik przy pracy" loading="lazy">
+    </a>
+    <a href="#img4">
+      <img src="zdjecie4.jpg" alt="Samochód dostawczy" loading="lazy">
+    </a>
+    <a href="#img5">
+      <img src="zdjecie5.jpg" alt="Zdjęcie 5" loading="lazy">
+    </a>
+    <a href="#img6">
+      <img src="zdjecie6.jpg" alt="Zdjęcie 6" loading="lazy">
+    </a>
+    <a href="#img7">
+      <img src="zdjecie7.jpg" alt="Zdjęcie 7" loading="lazy">
+    </a>
+    <a href="#img8">
+      <img src="zdjecie8.jpg" alt="Zdjęcie 8" loading="lazy">
+    </a>
+    <a href="#img9">
+  <img src="zdjecie9.jpg" alt="Nowe zdjęcie 9" loading="lazy">
+</a>
+
+<a href="#img10">
+  <img src="zdjecie10.png" alt="Nowe zdjęcie 10" loading="lazy">
+</a>
+
+    <!-- Miniaturka do filmu 1 -->
+<a href="#video1">
+  <img src="miniaturka-video1.png" alt="Film Ivo Car Service 1" loading="lazy">
+</a>
+
+<!-- Miniaturka do filmu 2 -->
+<a href="#video2">
+  <img src="miniaturka-video2.png" alt="Film Ivo Car Service 2" loading="lazy">
+</a>
+
+  </section>
+
+  <!-- Lightboxy -->
+  <div id="img1" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img8" class="prev">&#10094;</a>
+      <img src="zdjecie1.jpg" alt="Warsztat 1">
+      <a href="#img2" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="img2" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img1" class="prev">&#10094;</a>
+      <img src="zdjecie2.jpg" alt="Warsztat 2">
+      <a href="#img3" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="img3" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img2" class="prev">&#10094;</a>
+      <img src="zdjecie3.jpg" alt="Mechanik przy pracy">
+      <a href="#img4" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="img4" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img3" class="prev">&#10094;</a>
+      <img src="zdjecie4.jpg" alt="Samochód dostawczy">
+      <a href="#img5" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="img5" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img4" class="prev">&#10094;</a>
+      <img src="zdjecie5.jpg" alt="Zdjęcie 5">
+      <a href="#img6" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="img6" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img5" class="prev">&#10094;</a>
+      <img src="zdjecie6.jpg" alt="Zdjęcie 6">
+      <a href="#img7" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="img7" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img6" class="prev">&#10094;</a>
+      <img src="zdjecie7.jpg" alt="Zdjęcie 7">
+      <a href="#img8" class="next">&#10095;</a>
+    </div>
+  </div>
+
+ <div id="img8" class="lightbox">
+  <a href="javascript:void(0)" class="close-btn">&times;</a>
+  <div class="lightbox-content">
+    <a href="#img7" class="prev">&#10094;</a>
+    <img src="zdjecie8.jpg" alt="Zdjęcie 8">
+    <a href="#img9" class="next">&#10095;</a> <!-- Zmienione z #img1 na #img9 -->
+  </div>
+</div>
+
+<div id="img9" class="lightbox">
+  <a href="javascript:void(0)" class="close-btn">&times;</a>
+  <div class="lightbox-content">
+    <a href="#img8" class="prev">&#10094;</a>
+    <img src="zdjecie9.jpg" alt="Nowe zdjęcie 9">
+    <a href="#img10" class="next">&#10095;</a>
+  </div>
+</div>
+
+<div id="img10" class="lightbox">
+  <a href="javascript:void(0)" class="close-btn">&times;</a>
+  <div class="lightbox-content">
+    <a href="#img9" class="prev">&#10094;</a>
+    <img src="zdjecie10.png" alt="Nowe zdjęcie 10">
+    <a href="#video1" class="next">&#10095;</a>
+  </div>
+</div>
+
+
+ <div id="video1" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#img10" class="prev">&#10094;</a>
+      <video controls autoplay>
+        <source src="Ivo Car Service 1.mp4" type="video/mp4">
+        Twoja przeglądarka nie obsługuje wideo.
+      </video>
+      <a href="#video2" class="next">&#10095;</a>
+    </div>
+  </div>
+
+  <div id="video2" class="lightbox">
+    <a href="javascript:void(0)" class="close-btn">&times;</a>
+    <div class="lightbox-content">
+      <a href="#video1" class="prev">&#10094;</a>
+      <video controls autoplay>
+        <source src="Ivo Car Service 2.mp4" type="video/mp4">
+        Twoja przeglądarka nie obsługuje wideo.
+      </video>
+      <a href="#img1" class="next">&#10095;</a>
+    </div>
+  </div>
+
+      
+  
+ <section class="contact-map">
+  <div class="contact-map-container">
+    <div class="business-info">
+      <h2>IVO CAR SERVICE</h2>
+      <p class="address">Kobiałka 2, 03-044 Warszawa</p>
+      <div class="rating">
+        <span class="stars">★★★★★</span>
+        <span class="score">5,0</span>
+        <span class="reviews">(11 opinii)</span>
+      </div>
+      <div class="business-hours">
+        <p><strong>Godziny otwarcia:</strong></p>
+        <p>Poniedziałek - Piątek: 8:00 - 17:00</p>
+        <p class="closed">Sobota - Niedziela: Zamknięte</p>
+      </div>
+      <div class="contact-buttons">
+        <a href="https://maps.google.com/?q=IVO+CAR+Service+Kobialka+2+Warszawa" class="action-button" target="_blank">
+          <i class="fas fa-map-marker-alt"></i> Wyświetl mapę
+        </a>
+        <a href="tel:693463181" class="action-button phone">
+          <i class="fas fa-phone"></i> Hubert: 693 463 181
+        </a>
+        <a href="tel:606982722" class="action-button phone">
+          <i class="fas fa-phone"></i> Marcin: 606 982 722
+        </a>
+      </div>
+    </div>
+    
+    <div class="map-wrapper">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d673.578245060963!2d21.028568465154!3d52.35518596882761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ec97741750e0f%3A0x8cc00b0d2e25371a!2sIVO%20CAR%20SERVICE%20Iveco%20Ducato!5e1!3m2!1spl!2spl!4v1749130244953!5m2!1spl!2spl" 
+        width="100%" 
+        height="100%" 
+        style="border:0; border-radius: 10px;" 
+        allowfullscreen="" 
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-map {
+    padding: 60px 20px;
+    background-color: #111;
+    margin: 60px auto;
+    max-width: 1200px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.3);
+    border: 1px solid #00bfff;
+  }
+
+  .contact-map-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .business-info {
+    color: #f0f0f0;
+    padding: 20px;
+  }
+
+  .business-info h2 {
+    color: #00bfff;
+    margin-bottom: 15px;
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+  }
+
+  .address {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+
+  .stars {
+    color: #ffd700;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+  }
+
+  .score {
+    font-weight: bold;
+    color: white;
+  }
+
+  .reviews {
+    color: #aaa;
+  }
+
+  .business-hours {
+    background: rgba(0, 191, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 3px solid #00bfff;
+  }
+
+  .business-hours p {
+    margin: 5px 0;
+    color: #ddd;
+  }
+
+  .business-hours .closed {
+    color: #ff6b6b;
+  }
+
+  .contact-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: #00bfff;
+    color: #0d0d0d;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .action-button:hover {
+    background-color: #0091d9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4);
+  }
+
+  .action-button.phone {
+    background-color: #25D366;
+  }
+
+  .action-button.phone:hover {
+    background-color: #1DA851;
+  }
+
+  .map-wrapper {
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 2px solid #00bfff;
+  }
+
+  @media (max-width: 768px) {
+    .contact-map-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .business-info {
+      text-align: center;
+    }
+
+    .rating {
+      justify-content: center;
+    }
+
+    .contact-buttons {
+      justify-content: center;
+    }
+
+    .map-wrapper {
+      height: 300px;
+    }
+  }
+</style>
+
+<!-- Dodaj Font Awesome w head jeśli nie masz -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    </div>
+</section>
+
+<footer>
+  &copy; <span id="year"></span> IVO CAR Service – Wszystkie prawa zastrzeżone.
+</footer>
+
+<script>
+  // Aktualizacja roku w stopce
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Inicjalizacja lightboxów
+    const galleryLinks = document.querySelectorAll('.gallery a');
+    const lightboxes = document.querySelectorAll('.lightbox');
+    const closeBtns = document.querySelectorAll('.close-btn');
+
+    // Otwieranie lightboxa po kliknięciu w miniaturę
+    galleryLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const lightbox = document.getElementById(targetId);
+        
+        // Ukryj wszystkie lightboxy
+        lightboxes.forEach(lb => lb.style.display = 'none');
+        
+        // Pokaż wybrany lightbox
+        if (lightbox) {
+          lightbox.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          
+          // Wymuszenie centrowania zawartości
+          const content = lightbox.querySelector('.lightbox-content');
+          if (content) {
+            content.style.display = 'flex';
+            content.style.alignItems = 'center';
+            content.style.justifyContent = 'center';
+          }
+        }
+      });
+    });
+
+    // Zamykanie lightboxa
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const lightbox = this.closest('.lightbox');
+        lightbox.style.display = 'none';
+        document.body.style.overflow = '';
+        stopAllVideos();
+      });
+    });
+
+    // Nawigacja między zdjęciami
+    document.querySelectorAll('.prev, .next').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const currentLightbox = this.closest('.lightbox');
+        const targetId = this.getAttribute('href').substring(1);
+        const targetLightbox = document.getElementById(targetId);
+        
+        if (targetLightbox) {
+          currentLightbox.style.display = 'none';
+          targetLightbox.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    // Obsługa klawiatury
+    document.addEventListener('keydown', function(e) {
+      const visibleLightbox = document.querySelector('.lightbox[style="display: flex;"]');
+      if (!visibleLightbox) return;
+
+      if (e.key === 'Escape') {
+        visibleLightbox.style.display = 'none';
+        document.body.style.overflow = '';
+        stopAllVideos();
+      } else if (e.key === 'ArrowLeft') {
+        const prevBtn = visibleLightbox.querySelector('.prev');
+        if (prevBtn) prevBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        const nextBtn = visibleLightbox.querySelector('.next');
+        if (nextBtn) nextBtn.click();
+      }
+    });
+
+    // Funkcja do zatrzymywania filmów
+    function stopAllVideos() {
+      document.querySelectorAll('.lightbox video').forEach(video => {
+        video.pause();
+        video.currentTime = 0;
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
